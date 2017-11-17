@@ -1,0 +1,7 @@
+MBWebView.xcodeproj/xcuserdata/
+MBWebView.xcworkspace/
+Pods/
+*.swp
+Podfile.lock
+.DS_Store
+MBWebView.xcodeproj/project.xcworkspace/xcuserdata/

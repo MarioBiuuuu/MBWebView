@@ -21,12 +21,8 @@
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    MBWebViewController *vc = [[MBWebViewController alloc] initWithURLString:@"https://www.baidu.com"];
-    [self presentViewController:vc animated:YES completion:^{
-        
-    }];
-}
 
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

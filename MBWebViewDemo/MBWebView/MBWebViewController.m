@@ -32,7 +32,11 @@ static NSString *goBack = @"goBack";
 
 // 交互回调消息体
 @property (nonatomic, strong) MBWebMessage *message;
-@property (nonatomic, copy) void (^userDefiendCallBack)(WKScriptMessage *message);
+//@property (nonatomic, copy) void (^userDefiendCallBack)(WKScriptMessage *message);
+//@property (nonatomic, copy) NSString *userdefinedHandlerName;
+// 存储注册JS交互
+@property (nonatomic, strong) NSMutableDictionary *registersDict;
+
 
 @end
 
@@ -83,9 +87,103 @@ static NSString *goBack = @"goBack";
     return self;
 }
 
+- (instancetype)initWithURLString:(NSString *)urlString handlerName:(NSString *)name callBack:(void(^)(WKScriptMessage *message))callBack {
+    self = [super init];
+    if (self) {
+        self.registersDict[name] = callBack;
+        _urlString = urlString;
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithURL:(NSURL *)url handlerName:(NSString *)name callBack:(void(^)(WKScriptMessage *message))callBack {
+    self = [super init];
+    if (self) {
+        self.registersDict[name] = callBack;
+        _url = url;
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithRequest:(NSURLRequest *)request handlerName:(NSString *)name callBack:(void(^)(WKScriptMessage *message))callBack {
+    self = [super init];
+    if (self) {
+        self.registersDict[name] = callBack;
+        _request = request;
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithHTMLString:(NSString *)string baseURL:(NSURL *)baseURL handlerName:(NSString *)name callBack:(void(^)(WKScriptMessage *message))callBack {
+    self = [super init];
+    if (self) {
+        self.registersDict[name] = callBack;
+        _htmlString = string;
+        _baseURL = baseURL;
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithURLString:(NSString *)urlString multiHandlerNameAndCallBack:(NSArray<MBWebHandlerObj *> *)registerData {
+    self = [super init];
+    if (self) {
+        for (MBWebHandlerObj *obj in registerData) {
+            self.registersDict[obj.handlerName] = obj.callBackBlock;
+        }
+        _urlString = urlString;
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithURL:(NSURL *)url multiHandlerNameAndCallBack:(NSArray<MBWebHandlerObj *> *)registerData {
+    self = [super init];
+    if (self) {
+        for (MBWebHandlerObj *obj in registerData) {
+            self.registersDict[obj.handlerName] = obj.callBackBlock;
+        }
+        _url = url;
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithRequest:(NSURLRequest *)request multiHandlerNameAndCallBack:(NSArray<MBWebHandlerObj *> *)registerData {
+    self = [super init];
+    if (self) {
+        for (MBWebHandlerObj *obj in registerData) {
+            self.registersDict[obj.handlerName] = obj.callBackBlock;
+        }
+        _request = request;
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithHTMLString:(NSString *)string baseURL:(NSURL *)baseURL multiHandlerNameAndCallBack:(NSArray<MBWebHandlerObj *> *)registerData {
+    self = [super init];
+    if (self) {
+        for (MBWebHandlerObj *obj in registerData) {
+            self.registersDict[obj.handlerName] = obj.callBackBlock;
+        }
+        _htmlString = string;
+        _baseURL = baseURL;
+    }
+    
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
+    for (NSString *name in self.registersDict.allKeys) {
+        [self registerUserDefinedMessageHandlerName:name callBack:self.registersDict[name]];
+    }
+    
     [self registerMessageHandler];
     [self addObserver];
     [self loadPage];
@@ -106,6 +204,13 @@ static NSString *goBack = @"goBack";
 }
 
 #pragma mark - Getter
+- (NSMutableDictionary *)registersDict {
+    if (!_registersDict) {
+        _registersDict = [NSMutableDictionary dictionary];
+    }
+    return _registersDict;
+}
+
 - (WKWebView *)webView {
     if (!_webView) {
         WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
@@ -303,7 +408,7 @@ static NSString *goBack = @"goBack";
     _backImg = backImg;
     if (backImg && [backImg isKindOfClass:[UIImage class]]) {
         self.navigationItem.leftBarButtonItem = nil;
-
+        
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
         button.titleLabel.font = [UIFont systemFontOfSize:15];
         [button setImage:backImg forState:UIControlStateNormal];
@@ -316,7 +421,7 @@ static NSString *goBack = @"goBack";
         [button addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
         _backItem = [[UIBarButtonItem alloc] initWithCustomView:button];
         self.navigationItem.leftBarButtonItem = _backItem;
-
+        
     }
 }
 
@@ -325,15 +430,7 @@ static NSString *goBack = @"goBack";
 }
 
 - (void)registerUserDefinedMessageHandlerName:(NSString *)name callBack:(void(^)(WKScriptMessage *message))callBack {
-    self.userDefiendCallBack = callBack;
     [self.webView.configuration.userContentController addScriptMessageHandler:self name:name];
-}
-
-- (void)registerUserDefinedMessageHandlerNames:(NSArray *)names callBack:(void(^)(WKScriptMessage *message))callBack {
-    self.userDefiendCallBack = callBack;
-    for (NSString *name in names) {
-        [self.webView.configuration.userContentController addScriptMessageHandler:self name:name];
-    }
 }
 
 - (BOOL)dealWithMessage:(WKScriptMessage *)message {
@@ -354,10 +451,16 @@ static NSString *goBack = @"goBack";
             [self backAction];
             canDeal = YES;
         }
+    } else {
+        void (^userDefiendCallBack)(WKScriptMessage *message) = self.registersDict[message.name];
+
+        if (userDefiendCallBack) {
+            userDefiendCallBack(message);
+        }
     }
     
     if (canDeal && self.message.callbackMethod.length > 0) {
-    
+        
     }
     
     return canDeal;
@@ -418,3 +521,4 @@ static NSString *goBack = @"goBack";
 }
 
 @end
+

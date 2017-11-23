@@ -9,20 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
-
-@interface MBWebMessage : NSObject
-// 交互方法名
-@property (nonatomic, copy) NSString *methodName;
-// 交互回调参数
-@property (nonatomic, copy) NSDictionary *params;
-// 交互回调JS方法
-@property (nonatomic, copy) NSString *callbackMethod;
-
-@end
-
-@implementation MBWebMessage
-
-@end
+#import "MBWebMessage.h"
 
 
 // 交互方法名

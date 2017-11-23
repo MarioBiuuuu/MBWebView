@@ -15,6 +15,7 @@
 		89310A891FBD8CD700A06CB9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 89310A881FBD8CD700A06CB9 /* main.m */; };
 		89310A991FBD8DB800A06CB9 /* MBWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89310A931FBD8DB800A06CB9 /* MBWebViewController.m */; };
 		89310A9A1FBD8DB800A06CB9 /* MBCommonNav_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 89310A941FBD8DB800A06CB9 /* MBCommonNav_back@2x.png */; };
+		8977B9B11FC66FA7006A48F2 /* MBWebMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8977B9B01FC66FA7006A48F2 /* MBWebMessage.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,8 @@
 		89310A931FBD8DB800A06CB9 /* MBWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBWebViewController.m; sourceTree = "<group>"; };
 		89310A941FBD8DB800A06CB9 /* MBCommonNav_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MBCommonNav_back@2x.png"; sourceTree = "<group>"; };
 		89310A951FBD8DB800A06CB9 /* MBWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBWebViewController.h; sourceTree = "<group>"; };
+		8977B9AF1FC66FA7006A48F2 /* MBWebMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MBWebMessage.h; sourceTree = "<group>"; };
+		8977B9B01FC66FA7006A48F2 /* MBWebMessage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MBWebMessage.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +86,8 @@
 				89310A941FBD8DB800A06CB9 /* MBCommonNav_back@2x.png */,
 				89310A951FBD8DB800A06CB9 /* MBWebViewController.h */,
 				89310A931FBD8DB800A06CB9 /* MBWebViewController.m */,
+				8977B9AF1FC66FA7006A48F2 /* MBWebMessage.h */,
+				8977B9B01FC66FA7006A48F2 /* MBWebMessage.m */,
 			);
 			path = MBWebView;
 			sourceTree = "<group>";
@@ -163,6 +168,7 @@
 				89310A891FBD8CD700A06CB9 /* main.m in Sources */,
 				89310A991FBD8DB800A06CB9 /* MBWebViewController.m in Sources */,
 				89310A7B1FBD8CD600A06CB9 /* AppDelegate.m in Sources */,
+				8977B9B11FC66FA7006A48F2 /* MBWebMessage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

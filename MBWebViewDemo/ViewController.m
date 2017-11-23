@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "MBWebViewController.h"
 
 @interface ViewController ()
 
@@ -19,6 +20,12 @@
     // Do any additional setup after loading the view, typically from a nib.
 }
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    MBWebViewController *vc = [[MBWebViewController alloc] initWithURLString:@"https://www.baidu.com"];
+    [self presentViewController:vc animated:YES completion:^{
+        
+    }];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

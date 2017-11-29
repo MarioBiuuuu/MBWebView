@@ -17,6 +17,7 @@
 		89310A9A1FBD8DB800A06CB9 /* MBCommonNav_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 89310A941FBD8DB800A06CB9 /* MBCommonNav_back@2x.png */; };
 		896EBA5D1FC6C62F00FCB655 /* MBWebHandlerObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 896EBA5C1FC6C62F00FCB655 /* MBWebHandlerObj.m */; };
 		8977B9B11FC66FA7006A48F2 /* MBWebMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8977B9B01FC66FA7006A48F2 /* MBWebMessage.m */; };
+		8981292A1FCE4317008B447D /* Temp01.html in Resources */ = {isa = PBXBuildFile; fileRef = 898129291FCE4316008B447D /* Temp01.html */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		896EBA5C1FC6C62F00FCB655 /* MBWebHandlerObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBWebHandlerObj.m; sourceTree = "<group>"; };
 		8977B9AF1FC66FA7006A48F2 /* MBWebMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MBWebMessage.h; sourceTree = "<group>"; };
 		8977B9B01FC66FA7006A48F2 /* MBWebMessage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MBWebMessage.m; sourceTree = "<group>"; };
+		898129291FCE4316008B447D /* Temp01.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Temp01.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 				89310A841FBD8CD700A06CB9 /* LaunchScreen.storyboard */,
 				89310A871FBD8CD700A06CB9 /* Info.plist */,
 				89310A881FBD8CD700A06CB9 /* main.m */,
+				898129291FCE4316008B447D /* Temp01.html */,
 			);
 			path = MBWebViewDemo;
 			sourceTree = "<group>";
@@ -156,6 +159,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				89310A861FBD8CD700A06CB9 /* LaunchScreen.storyboard in Resources */,
+				8981292A1FCE4317008B447D /* Temp01.html in Resources */,
 				89310A9A1FBD8DB800A06CB9 /* MBCommonNav_back@2x.png in Resources */,
 				89310A831FBD8CD700A06CB9 /* Assets.xcassets in Resources */,
 				89310A811FBD8CD700A06CB9 /* Main.storyboard in Resources */,

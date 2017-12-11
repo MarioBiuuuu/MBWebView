@@ -215,6 +215,14 @@ static NSString *goBack = @"goBack";
     if (!_webView) {
         WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
         _webView = [[WKWebView alloc] initWithFrame:self.view.bounds configuration:configuration];
+        NSArray *viewControllers = self.navigationController.viewControllers;
+        if (viewControllers.count > 1) {
+            if ([viewControllers objectAtIndex:viewControllers.count - 1]==self) { //push方式
+                _webView.frame = self.view.bounds;
+            }
+        } else { //present方式
+            _webView.frame = CGRectMake(0, 20, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - 20);
+        }
         _webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         _webView.backgroundColor = [UIColor whiteColor];
         _webView.navigationDelegate = self;
@@ -222,6 +230,11 @@ static NSString *goBack = @"goBack";
     }
     
     return _webView;
+}
+
+- (void)setNoBoundces:(BOOL)noBoundces {
+    _noBoundces = noBoundces;
+    self.webView.scrollView.bounces = !noBoundces;
 }
 
 - (UIProgressView *)progressView {
@@ -453,7 +466,7 @@ static NSString *goBack = @"goBack";
         }
     } else {
         void (^userDefiendCallBack)(WKScriptMessage *message) = self.registersDict[message.name];
-
+        
         if (userDefiendCallBack) {
             userDefiendCallBack(message);
         }
@@ -502,6 +515,7 @@ static NSString *goBack = @"goBack";
 }
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation {
+    webView.scrollView.bounces = !self.noBoundces;
     [self hideProgress];
     [self setErrorViewHidden:YES];
 }

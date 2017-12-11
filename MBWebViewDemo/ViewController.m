@@ -35,6 +35,7 @@
             }
         }
     }];
+    self.webVC.noBoundces = NO;
     [self.navigationController pushViewController:self.webVC animated:YES];
 
 }

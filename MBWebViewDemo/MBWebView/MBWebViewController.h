@@ -32,6 +32,8 @@
 @property (nonatomic, strong) UIColor *progressViewTintColor;
 // 回调消息体
 @property (nonatomic, strong, readonly) MBWebMessage *message;
+// 设置是否用弹簧效果
+@property (nonatomic, assign) BOOL noBoundces;
 
 // 初始化WebViewController加载文件或网络地址
 - (instancetype)initWithURLString:(NSString *)urlString;

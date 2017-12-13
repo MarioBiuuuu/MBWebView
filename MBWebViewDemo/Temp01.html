@@ -10,7 +10,7 @@
     </style>
     
     <script type="text/javascript">
-        function function() {
+        function function123() {
             var message = {
                 'methodName' : 'function1',
                 'params' : {
@@ -25,6 +25,10 @@
         function callbackFunction(text) {
             alert("OC回调参数:" + text);
         }
+    
+        function callBackA(){
+            alert("ajdlkajdklajlkdjaslkd");
+        }
         
         function close() {
             var message = {
@@ -37,7 +41,7 @@
 </head>
 <body>
     <br /><br /><br />
-    <center><button onclick="function()">js调用OC方法，传递参数</button></center>
+    <center><button onclick="function123()">js调用OC方法，传递参数</button></center>
     <br /><br /><br />
     <center><button onclick="close()">js调用OC方法关闭webview</button></center>
 </body>

@@ -34,6 +34,10 @@
                //callback js
             }
         }
+        [strongSelf.webVC callJSMethod:@"123123128737129" completionHandler:^(id response, NSError *error) {
+            NSLog(@"%@", error.localizedDescription);
+        }];
+        
     }];
     self.webVC.noBoundces = NO;
     [self.navigationController pushViewController:self.webVC animated:YES];

@@ -211,26 +211,27 @@ static NSString *goBack = @"goBack";
     return _registersDict;
 }
 
-- (WKWebView *)webView {
-    if (!_webView) {
-        WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
-        _webView = [[WKWebView alloc] initWithFrame:self.view.bounds configuration:configuration];
-        NSArray *viewControllers = self.navigationController.viewControllers;
-        if (viewControllers.count > 1) {
-            if ([viewControllers objectAtIndex:viewControllers.count - 1]==self) { //push方式
-                _webView.frame = self.view.bounds;
-            }
-        } else { //present方式
-            _webView.frame = CGRectMake(0, 20, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - 20);
-        }
-        _webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        _webView.backgroundColor = [UIColor whiteColor];
-        _webView.navigationDelegate = self;
-        _webView.UIDelegate = self;
-    }
-    
-    return _webView;
-}
+//- (WKWebView *)webView {
+//    WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
+//
+//    if (!_webView) {
+//        _webView = [[WKWebView alloc] initWithFrame:self.view.bounds configuration:configuration];
+//        NSArray *viewControllers = self.navigationController.viewControllers;
+//        if (viewControllers.count > 1) {
+//            if ([viewControllers objectAtIndex:viewControllers.count - 1]==self) { //push方式
+//                _webView.frame = self.view.bounds;
+//            }
+//        } else { //present方式
+//            _webView.frame = CGRectMake(0, 20, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - 20);
+//        }
+//        _webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+//        _webView.backgroundColor = [UIColor whiteColor];
+//        _webView.navigationDelegate = self;
+//        _webView.UIDelegate = self;
+//    }
+//
+//    return _webView;
+//}
 
 - (void)setNoBoundces:(BOOL)noBoundces {
     _noBoundces = noBoundces;
@@ -313,8 +314,26 @@ static NSString *goBack = @"goBack";
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItem = self.backItem;
+    [self intialWebView];
     [self.view addSubview:self.webView];
     [self.view addSubview:self.progressView];
+}
+
+- (void)intialWebView {
+    WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
+    _webView = [[WKWebView alloc] initWithFrame:self.view.bounds configuration:configuration];
+    NSArray *viewControllers = self.navigationController.viewControllers;
+    if (viewControllers.count > 1) {
+        if ([viewControllers objectAtIndex:viewControllers.count - 1]==self) { //push方式
+            _webView.frame = self.view.bounds;
+        }
+    } else { //present方式
+        _webView.frame = CGRectMake(0, 20, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - 20);
+    }
+    _webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    _webView.backgroundColor = [UIColor whiteColor];
+    _webView.navigationDelegate = self;
+    _webView.UIDelegate = self;
 }
 
 - (void)updateButtonItems {
@@ -483,10 +502,10 @@ static NSString *goBack = @"goBack";
     if (self.message.callbackMethod.length > 0) {
         NSString *jsonStr = (argumentsJson.length > 0 ? argumentsJson : @"");
         
-        [self.webView evaluateJavaScript:[NSString stringWithFormat:@"%@('%@')",self.message.callbackMethod, jsonStr] completionHandler:^(id _Nullable response, NSError * _Nullable error) {
-            
-        }];
+        [self.webView evaluateJavaScript:[NSString stringWithFormat:@"%@('%@')",self.message.callbackMethod, jsonStr] completionHandler:completionHandler];
+        
     }
+    
 }
 
 #pragma mark - KVO

@@ -388,11 +388,17 @@ static NSString *goBack = @"goBack";
 }
 
 - (void)updateProgress:(float)progress {
+    
+    if (self.hiddeProgressView) {
+        self.progressView.hidden = YES;
+        return;
+    }
+    
     self.progressView.hidden = NO;
     if (self.progressViewTintColor) {
         self.progressView.tintColor = self.progressViewTintColor;
     }
-
+    
     [self.progressView setProgress:progress animated:YES];
 }
 

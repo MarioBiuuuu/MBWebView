@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "MBWebView"
-  s.version      = "0.0.5"
+  s.version      = "1.0.0"
   s.summary      = "MBWebView."
 
   # This description is used to generate tags and improve search results.

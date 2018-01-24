@@ -238,18 +238,20 @@ static NSString *goBack = @"goBack";
     self.webView.scrollView.bounces = !noBoundces;
 }
 
-- (UIProgressView *)progressView {
+- (void)initialProgressView {
     if (!_progressView) {
         _progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 0)];
-        _progressView.tintColor = [UIColor greenColor];
+        if (self.progressViewTintColor) {
+            _progressView.tintColor = self.progressViewTintColor;
+        } else {
+            _progressView.tintColor = [UIColor greenColor];
+        }
         _progressView.trackTintColor = [UIColor clearColor];
         _progressView.hidden = YES;
     }
-    
-    return _progressView;
 }
 
-- (UIBarButtonItem *)backItem {
+- (void)initialBackItem {
     if (!_backItem) {
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
         button.titleLabel.font = [UIFont systemFontOfSize:15];
@@ -260,10 +262,9 @@ static NSString *goBack = @"goBack";
         _backItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     }
     
-    return _backItem;
 }
 
-- (UIBarButtonItem *)closeItem {
+- (void)initialCloseItem {
     if (!_closeItem) {
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
         button.titleLabel.font = [UIFont systemFontOfSize:15];
@@ -273,10 +274,9 @@ static NSString *goBack = @"goBack";
         _closeItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     }
     
-    return _closeItem;
 }
 
-- (UIView *)errorView {
+- (void)initialErrorView {
     if (!_errorView) {
         _errorView = [[UIView alloc] initWithFrame:self.view.bounds];
         _errorView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -292,7 +292,6 @@ static NSString *goBack = @"goBack";
         [_errorView addSubview:button];
     }
     
-    return _errorView;
 }
 
 #pragma mark - Action
@@ -310,11 +309,16 @@ static NSString *goBack = @"goBack";
 
 #pragma mark - Private
 - (void)initUI {
+    [self intialWebView];
+    [self initialBackItem];
+    [self initialCloseItem];
+    [self initialErrorView];
+    [self initialProgressView];
+    
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItem = self.backItem;
-    [self intialWebView];
     [self.view addSubview:self.webView];
     [self.view addSubview:self.progressView];
 }
@@ -385,6 +389,10 @@ static NSString *goBack = @"goBack";
 
 - (void)updateProgress:(float)progress {
     self.progressView.hidden = NO;
+    if (self.progressViewTintColor) {
+        self.progressView.tintColor = self.progressViewTintColor;
+    }
+
     [self.progressView setProgress:progress animated:YES];
 }
 
@@ -408,7 +416,7 @@ static NSString *goBack = @"goBack";
 #pragma mark - Public
 - (void)setHiddeProgressView:(BOOL)hiddeProgressView {
     _hiddeProgressView = hiddeProgressView;
-    self.progressView.hidden = YES;
+    self.progressView.hidden = hiddeProgressView;
 }
 
 - (void)setProgressViewTintColor:(UIColor *)progressViewTintColor {
